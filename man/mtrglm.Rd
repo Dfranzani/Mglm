@@ -16,25 +16,33 @@ mtrglm(
 )
 }
 \arguments{
-\item{y}{variable respuesta}
+\item{y}{variable respuesta binaria}
 
-\item{x}{covariables}
+\item{x}{data frame de covariables}
 
-\item{link}{link}
+\item{link}{función de enlace ("logit", "probit" o "cloglog"), por defecto es "logit".}
 
-\item{p}{tamaño del entrenamiento}
+\item{p}{valor entre 0 y 1 que indica la proporción de entrenamiento, por defecto es 0.8.}
 
-\item{balance}{tipo de balanceo}
+\item{balance}{tipo de balanceo ("under" u "over"), por defecto es NULL (sin balancear).}
 
-\item{ms}{método de selección de variables}
+\item{ms}{método de selección de covariables ("forward" o "backward"), por defecto es NULL (se ocupan todas las covariables).}
 
-\item{semilla}{semilla de muestreo}
+\item{semilla}{semilla de muestreo, por defecto es 9999.}
 
-\item{influencia}{eliminación de los puntos de influecias del modelo}
+\item{influencia}{eliminación de los puntos de influecias del modelo, por defecto es TRUE.}
 }
 \value{
 métricas de desempeño
 }
 \description{
 Métricas de GLM
+}
+\examples{
+df = iris[, c(1,4,5)]
+df$Species = ifelse(df$Species == "virginica", 1, 0)
+metrics = mtrglm(df$Species, df[,c(1:2)])
+metrics$Train_Metrics
+metrics$ROC
+
 }

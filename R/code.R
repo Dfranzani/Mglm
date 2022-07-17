@@ -1,16 +1,24 @@
 #' Métricas de GLM
 #'
-#' @param y variable respuesta
-#' @param x covariables
-#' @param link link
-#' @param p tamaño del entrenamiento
-#' @param balance tipo de balanceo
-#' @param ms método de selección de variables
-#' @param semilla semilla de muestreo
-#' @param influencia eliminación de los puntos de influecias del modelo
+#' @param y variable respuesta binaria
+#' @param x data frame de covariables
+#' @param link función de enlace ("logit", "probit" o "cloglog"), por defecto es "logit".
+#' @param p valor entre 0 y 1 que indica la proporción de entrenamiento, por defecto es 0.8.
+#' @param balance tipo de balanceo ("under" u "over"), por defecto es NULL (sin balancear).
+#' @param ms método de selección de covariables ("forward" o "backward"), por defecto es NULL (se ocupan todas las covariables).
+#' @param semilla semilla de muestreo, por defecto es 9999.
+#' @param influencia eliminación de los puntos de influecias del modelo, por defecto es TRUE.
 #'
 #' @return métricas de desempeño
 #' @export
+#'
+#' @examples
+#' df = iris[, c(1,4,5)]
+#' df$Species = ifelse(df$Species == "virginica", 1, 0)
+#' metrics = mtrglm(df$Species, df[,c(1:2)])
+#' metrics$Train_Metrics
+#' metrics$ROC
+#'
 #' @importFrom ggplot2 ggplot aes geom_line labs theme element_text element_blank theme_minimal scale_y_continuous scale_x_continuous scale_color_manual geom_segment geom_point
 #' @importFrom UBL RandUnderClassif RandOverClassif
 #' @importFrom blorr blr_plot_difchisq_fitted
@@ -219,8 +227,8 @@ mtrglm = function(y, x, link = "logit", p = 0.8, balance = NULL, ms = NULL, semi
     metricas.entrenamiento = metricas(train$y, ifelse(predict(modelo, type = "response") < 0.5 , 0, 1))
     metricas.prueba = metricas(test$y, ifelse(predict(modelo, newdata = test, type = "response") < 0.5 , 0, 1))
 
-    metricas.entrenamiento = paste(format(round(metricas.entrenamiento*100, 2), nsmall = 2), "%", sep = " ")
-    metricas.prueba = paste(format(round(metricas.prueba*100, 2), nsmall = 2), "%", sep = " ")
+    # metricas.entrenamiento = paste(format(round(metricas.entrenamiento*100, 2), nsmall = 2), "%", sep = " ")
+    # metricas.prueba = paste(format(round(metricas.prueba*100, 2), nsmall = 2), "%", sep = " ")
 
     roc = model.roc(train$y, predict(modelo, type = "response"),
                     test$y, predict(modelo, newdata = test, type = "response"))
