@@ -18,7 +18,6 @@
 #' df$Species = ifelse(df$Species == "virginica", 1, 0)
 #' metrics = mtrglm(df$Species, df[,c(1:2)])
 #' metrics$Train_Metrics
-#' metrics$ROC
 #'
 #' @importFrom ggplot2 ggplot aes geom_line labs theme element_text element_blank theme_minimal scale_y_continuous scale_x_continuous scale_color_manual geom_segment geom_point
 #' @importFrom UBL RandUnderClassif RandOverClassif
@@ -100,10 +99,10 @@ mtrglm = function(y, x, link = "logit", p = 0.8, balance = NULL, ms = NULL, semi
     Deltachi = scatter.model(deltachi, n2, title = "Valores Delta Chi")
     Residuos = scatter.model(residuos, n3, title = "Residuos estandarizados")
 
-    modelo = list("Model" = modelo,
-                  "Null model" = modelo.nulo,
-                  "Train_Metrics" = metricas.entrenamiento,
-                  "Test_Metrics" = metricas.prueba,
+    modelo = list("Modelo" = modelo,
+                  "Modelo_nulo" = modelo.nulo,
+                  "Metricas_entrenamiento" = metricas.entrenamiento,
+                  "Metricas_prueba" = metricas.prueba,
                   "Cooks" = Cooks,
                   "DeltaChi" = Deltachi,
                   "Residuos" = Residuos,
