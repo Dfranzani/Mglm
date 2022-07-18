@@ -14,10 +14,11 @@
 #' @export
 #'
 #' @examples
-#' df = iris[, c(1,4,5)]
+#' df = iris[, c(4,5)]
 #' df$Species = ifelse(df$Species == "virginica", 1, 0)
-#' metrics = mtrglm(df$Species, df[,c(1:2)])
-#' metrics$Train_Metrics
+#' metrics = mtrglm(df$Species, df[,1])
+#' metrics$Metricas_entrenamiento
+#' metrics$Ganancia
 #'
 #' @importFrom ggplot2 ggplot aes geom_line labs theme element_text element_blank theme_minimal scale_y_continuous scale_x_continuous scale_color_manual geom_segment geom_point
 #' @importFrom UBL RandUnderClassif RandOverClassif
@@ -85,15 +86,13 @@ mtrglm = function(y, x, link = "logit", p = 0.8, balance = NULL, ms = NULL, semi
     metricas.entrenamiento = metricas(train$y, ifelse(predict(modelo, type = "response") < 0.5 , 0, 1))
     metricas.prueba = metricas(test$y, ifelse(predict(modelo, newdata = test, type = "response") < 0.5 , 0, 1))
 
-    # metricas.entrenamiento = paste(format(round(metricas.entrenamiento*100, 2), nsmall = 2), "%", sep = " ")
-    # metricas.prueba = paste(format(round(metricas.prueba*100, 2), nsmall = 2), "%", sep = " ")
-
     roc = model.roc(train$y, predict(modelo, type = "response"),
                     test$y, predict(modelo, newdata = test, type = "response"))
     pr = model.pr(train$y, predict(modelo, type = "response"),
                   test$y, predict(modelo, newdata = test, type = "response"))
     ks = model.ks(train$y, predict(modelo, type = "response"),
                   test$y, predict(modelo, newdata = test, type = "response"))
+    ganancia = model.ganancia(test$y, predict(modelo, newdata = test, type = "response"))
 
     Cooks = scatter.model(cook, n1, title = "Distancias de Cook")
     Deltachi = scatter.model(deltachi, n2, title = "Valores Delta Chi")
@@ -101,6 +100,8 @@ mtrglm = function(y, x, link = "logit", p = 0.8, balance = NULL, ms = NULL, semi
 
     modelo = list("Modelo" = modelo,
                   "Modelo_nulo" = modelo.nulo,
+                  "Conjunto_entrenamiento" = train,
+                  "Conjunto_prueba" = test,
                   "Metricas_entrenamiento" = metricas.entrenamiento,
                   "Metricas_prueba" = metricas.prueba,
                   "Cooks" = Cooks,
@@ -108,7 +109,8 @@ mtrglm = function(y, x, link = "logit", p = 0.8, balance = NULL, ms = NULL, semi
                   "Residuos" = Residuos,
                   "ROC" = roc,
                   "PR" = pr,
-                  "KS" = ks)
+                  "KS" = ks,
+                  "Ganancia" = ganancia)
 
     return(modelo)
   }

@@ -1,3 +1,11 @@
+#' @encoding UTF-8
+#' @title Métricas de la matriz de confusión
+#'
+#' @param reales valores reales
+#' @param predichos valores predichos por el modelo
+#'
+#' @return `Recall`, `Precision`, `Accuracy` y `F1 Score`
+#' @export
 metricas = function(reales, predichos){
   TP = sum(reales == 1 & predichos == 1)
   FN = sum(reales == 1 & predichos == 0)

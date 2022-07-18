@@ -1,3 +1,13 @@
+#' @encoding UTF-8
+#' @title Gráfico de Precision - Recall
+#'
+#' @param realestrain valores reales de entrenamiento.
+#' @param probabilidadestrain probabilidades de la predicción del entrenamiento.
+#' @param realestest valores reales de prueba.
+#' @param probabilidadestest probabilidades de la predicción de la prueba.
+#'
+#' @return Gráfico de Precision vs Recall.
+#' @export
 model.pr = function(realestrain, probabilidadestrain, realestest, probabilidadestest){
 
   aux.calculus = function(reales, probabilidades, conjunto){
@@ -23,7 +33,6 @@ model.pr = function(realestrain, probabilidadestrain, realestest, probabilidades
     theme_minimal() +
     labs(title = "Curva PR") +
     theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-          # legend.text = element_text(size = 11),
           legend.position = "top",
           legend.title = element_blank()) +
     scale_x_continuous(limits = c(0,1)) +

@@ -1,3 +1,13 @@
+#' @encoding UTF-8
+#' @title Curva de ROC
+#'
+#' @param realestrain valores reales de entrenamiento.
+#' @param probabilidadestrain probabilidades de la predicción del entrenamiento.
+#' @param realestest valores reales de prueba.
+#' @param probabilidadestest probabilidades de la predicción de la prueba.
+#'
+#' @return Curva de ROC y sus respectivos AUC.
+#' @export
 model.roc = function(realestrain, probabilidadestrain, realestest, probabilidadestest){
 
   AUC = c()

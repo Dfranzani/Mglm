@@ -1,3 +1,13 @@
+#' @encoding UTF-8
+#' @title Métrica de Kolmogorov - Smirnov
+#'
+#' @param realestrain valores reales del conjunto de entrenamiento.
+#' @param probabilidadestrain probabilidades de los valores predichos del conjunto de entrenamiento.
+#' @param realestest valores reales del conjunto de prueba.
+#' @param probabilidadestest probabilidades de los valores predichos del conjunto de prueba.
+#'
+#' @return Gráfico de discriminación
+#' @export
 model.ks = function(realestrain, probabilidadestrain, realestest, probabilidadestest){
 
   ks = corte = c()
@@ -25,7 +35,6 @@ model.ks = function(realestrain, probabilidadestrain, realestest, probabilidades
     theme_minimal() +
     labs(title = "Curva KS", y = "Chance acumulada", x = "Tamaño de la muestra") +
     theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-          # legend.text = element_text(size = 11),
           legend.position = c(1, 0),
           legend.justification = c("right", "bottom"),
           legend.title = element_blank()) +

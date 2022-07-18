@@ -40,10 +40,10 @@ métricas de desempeño
 Métricas de GLM
 }
 \examples{
-df = iris[, c(1,4,5)]
+df = iris[, c(4,5)]
 df$Species = ifelse(df$Species == "virginica", 1, 0)
-metrics = mtrglm(df$Species, df[,c(1:2)])
-metrics$Train_Metrics
-metrics$ROC
+metrics = mtrglm(df$Species, df[,1])
+metrics$Metricas_entrenamiento
+metrics$Ganancia
 
 }
