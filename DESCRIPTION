@@ -2,7 +2,7 @@ Package: Mglm
 Title: Métricas para Modelos Lineales Generalizados
 Version: 0.1
 Authors@R: 
-    person("Daniel", "Franzani", , "dfranzani@gmail.com", role = c("aut", "cre"))
+    person("Daniel", "Franzani Cerda", , "dfranzani@gmail.com", role = c("aut", "cre"))
 Description: Paquete para determinar gráficos y métricas de desempeño de un modelo lineal generalizado.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -13,3 +13,4 @@ Imports:
   UBL,
   stats,
   blorr
+Language: spanish
